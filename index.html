@@ -91,7 +91,7 @@
         		//app.ticker.add(animate);
         	}
         }
-        
+        var danhua = false;
         function animate()
         {
         	if(zhangkai==true&&home1.x>=2200)
@@ -111,6 +111,11 @@
         		next.scale.x+=1/12;
         		next.scale.y+=1/12;
         	}
+        	/*if(danhua&&fill_image.alpha>0)
+        	{
+        		fill_image.alpha-=0.01;
+        		kuang.alpha-=0.01;
+      		}*/
         }
         
         function shangye()
@@ -136,6 +141,11 @@
    		}
    		
         var page = 0;
+        var is_ok = [6];
+        for(var x=0;x<6;x++)
+        {
+        	is_ok[x] = false;
+        }
         		var cartoon1 = new PIXI.Sprite.fromImage("res/吉祥物红.png");
    				//console.log("1");
    				var cartoon2 = new PIXI.Sprite.fromImage("res/吉祥物蓝.png");
@@ -419,38 +429,34 @@
    				app.stage.removeChild(answer4);
    			}
    		}
-   		var picture = [17];
-   		picture[0] = new PIXI.Sprite.fromImage("res/1.png");
-   		picture[1] = new PIXI.Sprite.fromImage("res/2.png");
-   		picture[2] = new PIXI.Sprite.fromImage("res/3.png");
-   		picture[3] = new PIXI.Sprite.fromImage("res/4.png");
-   		picture[4] = new PIXI.Sprite.fromImage("res/5.png");
-   		picture[5] = new PIXI.Sprite.fromImage("res/6.png");
-   		picture[6] = new PIXI.Sprite.fromImage("res/7.png");
-   		picture[7] = new PIXI.Sprite.fromImage("res/8.png");
-   		picture[8] = new PIXI.Sprite.fromImage("res/9.png");
-   		picture[9] = new PIXI.Sprite.fromImage("res/10.png");
-   		picture[10] = new PIXI.Sprite.fromImage("res/11.png");
-   		picture[11] = new PIXI.Sprite.fromImage("res/12.png");
-   		picture[12] = new PIXI.Sprite.fromImage("res/13.png");
-   		picture[13] = new PIXI.Sprite.fromImage("res/14.png");
-   		picture[14] = new PIXI.Sprite.fromImage("res/15.png");
-   		picture[15] = new PIXI.Sprite.fromImage("res/16.png");
-   		picture[16] = new PIXI.Sprite.fromImage("res/17.png");
+   		var picture = [6];
+   		picture[0] = new PIXI.Sprite.fromImage("res/23.png");
+   		picture[1] = new PIXI.Sprite.fromImage("res/24.png");
+   		picture[2] = new PIXI.Sprite.fromImage("res/25.png");
+   		picture[3] = new PIXI.Sprite.fromImage("res/26.png");
+   		picture[4] = new PIXI.Sprite.fromImage("res/27.png");
+   		picture[5] = new PIXI.Sprite.fromImage("res/28.png");
+   		var kuang1 = new PIXI.Sprite.fromImage("res/kuang.png");
+   		var fill_image = new PIXI.Sprite.fromImage("res/0.png");
    		function page2()
    		{
    			if(page==2)
    			{
+   				app.stage.addChild(kuang1);
+   				kuang1.anchor.set(0.5,0.5);
+   				kuang1.scale.set(0.2,0.2);
+   				kuang1.x = 1280;
+   				kuang1.y = 720;
    				//var move = false;
-   				for(var i=0;i<17;i++)
+   				for(var i=0;i<6;i++)
    				{
    					app.stage.addChild(picture[i]);
    					picture[i].anchor.set(0.5,0.5);
    					picture[i].interactive = true;
-   					picture[i].scale.set(0.1,0.1);
+   					picture[i].scale.set(0.2,0.2);
    				}
    				var random1, random2;
-   				for(i=0;i<17;i++)
+   				for(i=0;i<6;i++)
    				{
    					random1 = Math.random()*1600+320;
    					random2 = Math.random()*900+180;
@@ -466,17 +472,6 @@
    				picture[3].on("click",click4);
    				picture[4].on("click",click5);
    				picture[5].on("click",click6);
-   				picture[6].on("click",click7);
-   				picture[7].on("click",click8);
-   				picture[8].on("click",click9);
-   				picture[9].on("click",click10);
-   				picture[10].on("click",click11);
-   				picture[11].on("click",click12);
-   				picture[12].on("click",click13);
-   				picture[13].on("click",click14);
-   				picture[14].on("click",click15);
-   				picture[15].on("click",click16);
-   				picture[16].on("click",click17);
    				var pos;
    				var move_number;
    				function click1()
@@ -487,6 +482,7 @@
    						click_times=1;
    						move_number = 1;
    						picture[0].on("mousemove",move1);
+   						is_ok[0]=false;
    					}
    					else if(move==true&&click_times==1)
    					{
@@ -494,6 +490,26 @@
    						picture[0].y = pos.y;
    						click_times=0;
    						move=false;
+   						if(300>(Math.abs(picture[0].x-950)+Math.abs(picture[0].y-582)))
+   						{
+   							picture[0].x=950;
+   							picture[0].y=582;
+   							is_ok[0] = true;
+   						}
+   						if(is_ok[0]&&is_ok[1]&&is_ok[2]&&is_ok[3]&&is_ok[4]&&is_ok[5])
+   						{
+   							danhua = true;
+   							for(var i=0;i<6;i++)
+   							{
+   								app.stage.removeChild(picture[i]);
+   							}
+   							app.stage.addChild(fill_image);
+   							fill_image.x = 1260;
+   							fill_image.y = 720;
+   							fill_image.anchor.set(0.5,0.5);
+   							fill_image.scale.set(0.2,0.2);
+   							//app.ticker.add(animate);
+   						}
    					}
    					
    				}
@@ -505,6 +521,7 @@
    						click_times=1;
    						move_number = 2;
    						picture[1].on("mousemove",move2);
+   						is_ok[1]=false;
    					}
    					else if(move==true&&click_times==1)
    					{
@@ -512,6 +529,26 @@
    						picture[1].y = pos.y;
    						click_times=0;
    						move=false;
+   						if(300>(Math.abs(picture[1].x-927)+Math.abs(picture[1].y-833)))
+   						{
+   							picture[1].x=927;
+   							picture[1].y=833;
+   							is_ok[1] = true;
+   						}
+   						if(is_ok[0]&&is_ok[1]&&is_ok[2]&&is_ok[3]&&is_ok[4]&&is_ok[5])
+   						{
+   							danhua = true;
+   							for(var i=0;i<6;i++)
+   							{
+   								app.stage.removeChild(picture[i]);
+   							}
+   							app.stage.addChild(fill_image);
+   							fill_image.x = 1260;
+   							fill_image.y = 720;
+   							fill_image.anchor.set(0.5,0.5);
+   							fill_image.scale.set(0.2,0.2);
+   							//app.ticker.add(animate);
+   						}
    					}
    					
    				}
@@ -523,6 +560,7 @@
    						click_times=1;
    						move_number = 3;
    						picture[2].on("mousemove",move3);
+   						is_ok[2]=false;
    					}
    					else if(move==true&&click_times==1)
    					{
@@ -530,6 +568,26 @@
    						picture[2].y = pos.y;
    						click_times=0;
    						move=false;
+   						if(300>(Math.abs(picture[2].x-1250)+Math.abs(picture[2].y-860)))
+   						{
+   							picture[2].x=1250;
+   							picture[2].y=860;
+   							is_ok[2] = true;
+   						}
+   						if(is_ok[0]&&is_ok[1]&&is_ok[2]&&is_ok[3]&&is_ok[4]&&is_ok[5])
+   						{
+   							danhua = true;
+   							for(var i=0;i<6;i++)
+   							{
+   								app.stage.removeChild(picture[i]);
+   							}
+   							app.stage.addChild(fill_image);
+   							fill_image.x = 1260;
+   							fill_image.y = 720;
+   							fill_image.anchor.set(0.5,0.5);
+   							fill_image.scale.set(0.2,0.2);
+   							//app.ticker.add(animate);
+   						}
    					}
    					
    				}
@@ -541,6 +599,7 @@
    						click_times=1;
    						move_number = 4;
    						picture[3].on("mousemove",move4);
+   						is_ok[3]=false;
    					}
    					else if(move==true&&click_times==1)
    					{
@@ -548,6 +607,26 @@
    						picture[3].y = pos.y;
    						click_times=0;
    						move=false;
+   						if(300>(Math.abs(picture[3].x-1195)+Math.abs(picture[3].y-611)))
+   						{
+   							picture[3].x=1195;
+   							picture[3].y=611;
+   							is_ok[3] = true;
+   						}
+   						if(is_ok[0]&&is_ok[1]&&is_ok[2]&&is_ok[3]&&is_ok[4]&&is_ok[5])
+   						{
+   							danhua = true;
+   							for(var i=0;i<6;i++)
+   							{
+   								app.stage.removeChild(picture[i]);
+   							}
+   							app.stage.addChild(fill_image);
+   							fill_image.x = 1260;
+   							fill_image.y = 720;
+   							fill_image.anchor.set(0.5,0.5);
+   							fill_image.scale.set(0.2,0.2);
+   							//app.ticker.add(animate);
+   						}
    					}
    					
    				}
@@ -559,6 +638,7 @@
    						click_times=1;
    						move_number = 5;
    						picture[4].on("mousemove",move5);
+   						is_ok[4]=false;
    					}
    					else if(move==true&&click_times==1)
    					{
@@ -566,6 +646,26 @@
    						picture[4].y = pos.y;
    						click_times=0;
    						move=false;
+   						if(300>(Math.abs(picture[4].x-1535)+Math.abs(picture[4].y-545)))
+   						{
+   							picture[4].x=1535;
+   							picture[4].y=545;
+   							is_ok[4] = true;
+   						}
+   						if(is_ok[0]&&is_ok[1]&&is_ok[2]&&is_ok[3]&&is_ok[4]&&is_ok[5])
+   						{
+   							danhua = true;
+   							for(var i=0;i<6;i++)
+   							{
+   								app.stage.removeChild(picture[i]);
+   							}
+   							app.stage.addChild(fill_image);
+   							fill_image.x = 1260;
+   							fill_image.y = 720;
+   							fill_image.anchor.set(0.5,0.5);
+   							fill_image.scale.set(0.2,0.2);
+   							//app.ticker.add(animate);
+   						}
    					}
    					
    				}
@@ -577,6 +677,7 @@
    						click_times=1;
    						move_number = 6;
    						picture[5].on("mousemove",move6);
+   						is_ok[5]=false;
    					}
    					else if(move==true&&click_times==1)
    					{
@@ -584,224 +685,30 @@
    						picture[5].y = pos.y;
    						click_times=0;
    						move=false;
+   						if(300>(Math.abs(picture[5].x-1575)+Math.abs(picture[5].y-855)))
+   						{
+   							picture[5].x=1575;
+   							picture[5].y=855;
+   							is_ok[5] = true;
+   						}
+   						if(is_ok[0]&&is_ok[1]&&is_ok[2]&&is_ok[3]&&is_ok[4]&&is_ok[5])
+   						{
+   							danhua = true;
+   							for(var i=0;i<6;i++)
+   							{
+   								app.stage.removeChild(picture[i]);
+   							}
+   							app.stage.addChild(fill_image);
+   							fill_image.x = 1250;
+   							fill_image.y = 720;
+   							fill_image.anchor.set(0.5,0.5);
+   							fill_image.scale.set(0.2,0.2);
+   						}
    					}
    					
    				}
-   				function click7()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 7;
-   						picture[6].on("mousemove",move7);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[6].x = pos.x;
-   						picture[6].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
    					
-   				}
-   				function click8()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 8;
-   						picture[7].on("mousemove",move8);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[7].x = pos.x;
-   						picture[7].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click9()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 9;
-   						picture[8].on("mousemove",move9);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[8].x = pos.x;
-   						picture[8].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click10()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 10;
-   						picture[9].on("mousemove",move10);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[9].x = pos.x;
-   						picture[9].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click11()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 11;
-   						picture[10].on("mousemove",move11);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[10].x = pos.x;
-   						picture[10].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click12()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 12;
-   						picture[11].on("mousemove",move12);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[11].x = pos.x;
-   						picture[11].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click13()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 13;
-   						picture[12].on("mousemove",move13);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[12].x = pos.x;
-   						picture[12].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click14()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 14;
-   						picture[13].on("mousemove",move14);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[13].x = pos.x;
-   						picture[13].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click15()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 15;
-   						picture[14].on("mousemove",move15);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[14].x = pos.x;
-   						picture[14].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click16()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 16;
-   						picture[15].on("mousemove",move16);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[15].x = pos.x;
-   						picture[15].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   				function click17()
-   				{
-   					if(move==false&&click_times==0)
-   					{
-   						move = true;
-   						click_times=1;
-   						move_number = 17;
-   						picture[16].on("mousemove",move17);
-   					}
-   					else if(move==true&&click_times==1)
-   					{
-   						picture[16].x = pos.x;
-   						picture[16].y = pos.y;
-   						click_times=0;
-   						move=false;
-   					}
-   					
-   				}
-   					/*picture[0].on("mousemove",move1);
-   					picture[1].on("mousemove",move2);
-   					picture[2].on("mousemove",move3);
-   					picture[4].on("mousemove",move4);
-	   				picture[3].on("mousemove",move5);
-   					picture[5].on("mousemove",move6);
-   					picture[6].on("mousemove",move7);
-   					picture[7].on("mousemove",move8);
-   					picture[8].on("mousemove",move9);
-   					picture[9].on("mousemove",move10);
-	   				picture[10].on("mousemove",move11);
-   					picture[11].on("mousemove",move12);
-   					picture[12].on("mousemove",move13);
-   					picture[13].on("mousemove",move14);
-   					picture[14].on("mousemove",move15);
-   					picture[15].on("mousemove",move16);
-   					picture[16].on("mousemove",move17);*/
+   				
    				function move1(event)
    				{
    					if(click_times==1&&move_number==1)
@@ -856,112 +763,15 @@
    						picture[5].y = pos.y;
    					}
    				}
-   				function move7(event)
-   				{
-   					if(click_times==1&&move_number==7)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[6].x = pos.x;
-   						picture[6].y = pos.y;
-   					}
-   				}
-   				function move8(event)
-   				{
-   					if(click_times==1&&move_number==8)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[7].x = pos.x;
-   						picture[7].y = pos.y;
-   					}
-   				}
-   				function move9(event)
-   				{
-   					if(click_times==1&&move_number==9)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[8].x = pos.x;
-   						picture[8].y = pos.y;
-   					}
-   				}
-   				function move10(event)
-   				{
-   					if(click_times==1&&move_number==10)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[9].x = pos.x;
-   						picture[9].y = pos.y;
-   					}
-   				}
-   				function move11(event)
-   				{
-   					if(click_times==1&&move_number==11)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[10].x = pos.x;
-   						picture[10].y = pos.y;
-   					}
-   				}
-   				function move12(event)
-   				{
-   					if(click_times==1&&move_number==12)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[11].x = pos.x;
-   						picture[11].y = pos.y;
-   					}
-   				}
-   				function move13(event)
-   				{
-   					if(click_times==1&&move_number==13)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[12].x = pos.x;
-   						picture[12].y = pos.y;
-   					}
-   				}
-   				function move14(event)
-   				{
-   					if(click_times==1&&move_number==14)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[13].x = pos.x;
-   						picture[13].y = pos.y;
-   					}
-   				}
-   				function move15(event)
-   				{
-   					if(click_times==1&&move_number==15)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[14].x = pos.x;
-   						picture[14].y = pos.y;
-   					}
-   				}
-   				function move16(event)
-   				{
-   					if(click_times==1&&move_number==16)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[15].x = pos.x;
-   						picture[15].y = pos.y;
-   					}
-   				}
-   				function move17(event)
-   				{
-   					if(click_times==1&&move_number==17)
-   					{
-   						pos = event.data.getLocalPosition(app.stage);
-   						picture[16].x = pos.x;
-   						picture[16].y = pos.y;
-   					}
-   				}
    			}
    			else
    			{
-   				for(var i=0;i<17;i++)
+   				for(var i=0;i<6;i++)
    				{
    					app.stage.removeChild(picture[i]);
    				}
+   				app.stage.removeChild(kuang1);
+   				app.stage.removeChild(fill_image);
    			}
    			
    		}
